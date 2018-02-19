@@ -1,5 +1,7 @@
+require_relative "employee.rb"
+
 class Manager < Employee
-  attr_reader :employees
+  attr_accessor :employees
   def initialize(*args)
     super(*args)
     @employees = []
