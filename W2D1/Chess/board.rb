@@ -3,6 +3,7 @@ require_relative "piece"
 class Board
   attr_accessor :grid
 
+  BOARD_SIZE = 8
 
   def initialize
     @grid = Array.new(8) { Array.new(8) }
@@ -37,6 +38,14 @@ class Board
   def [](pos)
     row, col = pos
     self.grid[row][col]
+  end
+
+  def valid_pos?(pos)
+    pos.all?(&:in_range?)
+  end
+
+  def in_range?(num)
+    num.between?(0, BOARD_SIZE - 1)
   end
 
 end
