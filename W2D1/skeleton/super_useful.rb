@@ -1,6 +1,11 @@
 # PHASE 2
 def convert_to_int(str)
-  Integer(str)
+  begin
+    Integer(str)
+  rescue ArgumentError
+    nil
+  end
+
 end
 
 # PHASE 3
@@ -9,22 +14,31 @@ FRUITS = ["apple", "banana", "orange"]
 def reaction(maybe_fruit)
   if FRUITS.include? maybe_fruit
     puts "OMG, thanks so much for the #{maybe_fruit}!"
-  else 
-    raise StandardError 
-  end 
+  elsif maybe_fruit == "coffee"
+    raise GivenCoffeeError
+  else
+    raise StandardError
+  end
 end
 
 def feed_me_a_fruit
   puts "Hello, I am a friendly monster. :)"
+  begin
+    puts "Feed me a fruit! (Enter the name of a fruit:)"
+    maybe_fruit = gets.chomp
+    reaction(maybe_fruit)
+  rescue GivenCoffeeError
+    retry
+  end
 
-  puts "Feed me a fruit! (Enter the name of a fruit:)"
-  maybe_fruit = gets.chomp
-  reaction(maybe_fruit) 
-end  
+end
 
 # PHASE 4
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
+    raise FriendshipLengthError if yrs_known < 5
+    raise ArgumentError.new("No name") if name.length <= 0
+    raise ArgumentError.new("No pastime") if fav_pastime.length <= 0
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
@@ -39,8 +53,14 @@ class BestFriend
   end
 
   def give_friendship_bracelet
-    puts "Hey bestie, I made you a friendship bracelet. It says my name, #{@name}, so you never forget me." 
+    puts "Hey bestie, I made you a friendship bracelet. It says my name, #{@name}, so you never forget me."
   end
 end
 
-
+class GivenCoffeeError < ArgumentError
+end
+class FriendshipLengthError < ArgumentError
+  def message
+    "Not known long enough"
+  end
+end
