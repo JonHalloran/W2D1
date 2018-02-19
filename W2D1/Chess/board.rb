@@ -19,7 +19,9 @@ class Board
   end
 
   def valid_move?(start_pos, end_pos)
-    !empty?(start_pos)
+    has_piece = !empty?(start_pos)
+    empty_end = empty?(end_pos)
+    has_piece && empty_end
   end
 
   def move_piece(start_pos, end_pos)
