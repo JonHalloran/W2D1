@@ -1,4 +1,5 @@
-require_relative "piece"
+require_relative "pieces/piece"
+require_relative "pieces/null_piece"
 
 class Board
   attr_accessor :grid
@@ -6,7 +7,7 @@ class Board
   BOARD_SIZE = 8
 
   def initialize
-    @grid = Array.new(8) { Array.new(8) }
+    @grid = Array.new(8) { Array.new(8) { NullPiece.new } }
     create_pieces
   end
 
@@ -41,11 +42,15 @@ class Board
   end
 
   def valid_pos?(pos)
-    pos.all?(&:in_range?)
+    pos.all? { |i| in_range?(i) }
   end
 
   def in_range?(num)
     num.between?(0, BOARD_SIZE - 1)
+  end
+
+  def inspect
+    self.to_s
   end
 
 end
