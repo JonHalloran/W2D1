@@ -33,3 +33,12 @@ class Display
     to_s
   end
 end
+
+if $PROGRAM_NAME == __FILE__
+  disp = Display.new(Board.new)
+  loop do
+    disp.render
+    disp.cursor.get_input
+  end
+
+end

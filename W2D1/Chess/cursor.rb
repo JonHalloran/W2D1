@@ -35,16 +35,46 @@ MOVES = {
 class Cursor
 
   attr_reader :board
-  attr_accessor :cursor_pos
+  attr_accessor :cursor_pos, :selected_position
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
     @board = board
+    @selected_position = nil
   end
 
   def get_input
     key = KEYMAP[read_char]
     handle_key(key)
+  end
+
+  def handle_key(key)
+    if %i(return space).include?(key)
+      self.select_position
+    elsif MOVES.keys.include?(key)
+      update_pos(MOVES[key])
+    elsif key == :ctrl_c
+      Process.exit(0)
+    end
+  end
+
+  def update_pos(diff)
+    new_pos = [cursor_pos[0] + diff[0],
+               cursor_pos[1] + diff[1]]
+    self.cursor_pos = new_pos if board.valid_pos?(new_pos)
+    nil
+  end
+
+  def select_position
+    if self.selected_position.nil?
+      unless board[self.cursor_pos].is_a?(NullPiece)
+        # TODO: check color
+        self.selected_position = self.cursor_pos
+      end
+    else
+      board.move_piece(self.selected_position, self.cursor_pos)
+      self.selected_position = nil
+    end
   end
 
   private
@@ -78,20 +108,4 @@ class Cursor
     return input
   end
 
-  def handle_key(key)
-    if %i(return space).include?(key)
-      cursor_pos
-    elsif MOVES.keys.include?(key)
-      update_pos(MOVES[key])
-    elsif key == :ctrl_c
-      Process.exit(0)
-    end
-  end
-
-  def update_pos(diff)
-    new_pos = [cursor_pos[0] + diff[0],
-               cursor_pos[1] + diff[1]]
-    self.cursor_pos = new_pos if board.valid_pos?(new_pos)
-    nil
-  end
 end

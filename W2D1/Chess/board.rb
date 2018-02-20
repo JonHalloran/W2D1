@@ -17,7 +17,7 @@ class Board
   end
 
   def empty?(pos)
-    self[pos] == nil
+    self[pos].is_a?(NullPiece)
   end
 
   def valid_move?(start_pos, end_pos)
@@ -28,7 +28,7 @@ class Board
 
   def move_piece(start_pos, end_pos)
     raise ArgumentError unless valid_move?(start_pos, end_pos)
-    self[start_pos], self[end_pos] = nil, self[start_pos]
+    self[start_pos], self[end_pos] = NullPiece.new, self[start_pos]
   end
 
   def []=(pos, piece)
