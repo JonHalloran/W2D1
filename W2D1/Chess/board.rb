@@ -1,5 +1,5 @@
 require_relative "pieces/piece"
-require_relative "pieces/null_piece"
+Dir["./pieces/*.rb"].each {|file| require file }
 
 class Board
   attr_accessor :grid
@@ -12,8 +12,8 @@ class Board
   end
 
   def create_pieces
-    self.grid[0][0] = Piece.new(:black, self, [0, 0])
-    self.grid[-1][-1] = Piece.new(:white, self, [7, 7])
+    self.grid[0][0] = Knight.new(:black, self, [0, 0])
+    self.grid[-1][-1] = King.new(:white, self, [7, 7])
   end
 
   def empty?(pos)
