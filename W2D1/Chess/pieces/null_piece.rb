@@ -1,9 +1,9 @@
 require_relative "piece"
+require "singleton"
 
 class NullPiece < Piece
-  def initialize; end
 
-  def to_s
-    " "
-  end
+  include Singleton
+
+  def initialize; end
 end

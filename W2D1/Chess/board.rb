@@ -7,13 +7,13 @@ class Board
   BOARD_SIZE = 8
 
   def initialize
-    @grid = Array.new(8) { Array.new(8) { NullPiece.new } }
+    @grid = Array.new(8) { Array.new(8) { NullPiece.instance } }
     create_pieces
   end
 
   def create_pieces
-    self.grid[0].map! { |_| Piece.new }
-    self.grid[-1].map! { |_| Piece.new }
+    self.grid[0][0] = Piece.new(:black, self, [0, 0])
+    self.grid[-1][-1] = Piece.new(:white, self, [7, 7])
   end
 
   def empty?(pos)
@@ -28,7 +28,7 @@ class Board
 
   def move_piece(start_pos, end_pos)
     raise ArgumentError unless valid_move?(start_pos, end_pos)
-    self[start_pos], self[end_pos] = NullPiece.new, self[start_pos]
+    self[start_pos], self[end_pos] = NullPiece.instance, self[start_pos]
   end
 
   def []=(pos, piece)
