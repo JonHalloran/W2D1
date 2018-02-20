@@ -5,6 +5,7 @@ class Board
   attr_accessor :grid
 
   BOARD_SIZE = 8
+  HOME_ROW = { white: 7, black: 0 }.freeze
 
   def initialize
     @grid = Array.new(8) { Array.new(8) { NullPiece.instance } }
@@ -12,9 +13,10 @@ class Board
   end
 
   def create_pieces
-    self[[2, 2]] = Knight.new(:black, self, [2, 2])
+    self[[2, 2]] = Knight.new(:white, self, [2, 2])
     self[[5, 4]] = King.new(:white, self, [5, 4])
     self[[5, 5]] = Queen.new(:white, self, [5, 5])
+    self[[1, 1]] = Pawn.new(:black, self, [1, 1])
   end
 
   def empty?(pos)

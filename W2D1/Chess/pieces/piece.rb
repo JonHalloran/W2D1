@@ -16,4 +16,11 @@ class Piece
   def to_s
     " "
   end
+
+  private
+
+  def enemy?(other)
+    other.color == (self.color == :white ? :black : :white)
+  end
+
 end
