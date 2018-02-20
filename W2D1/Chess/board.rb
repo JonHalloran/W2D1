@@ -12,12 +12,13 @@ class Board
   end
 
   def create_pieces
-    self.grid[0][0] = Knight.new(:black, self, [0, 0])
-    self.grid[-1][-1] = King.new(:white, self, [7, 7])
+    self[[2, 2]] = Knight.new(:black, self, [2, 2])
+    self[[5, 4]] = King.new(:white, self, [5, 4])
+    self[[5, 5]] = Queen.new(:white, self, [5, 5])
   end
 
   def empty?(pos)
-    self[pos].is_a?(NullPiece)
+    self.valid_pos?(pos) && self[pos].is_a?(NullPiece)
   end
 
   def valid_move?(start_pos, end_pos)
@@ -28,6 +29,7 @@ class Board
 
   def move_piece(start_pos, end_pos)
     raise ArgumentError unless valid_move?(start_pos, end_pos)
+    self[start_pos].pos = end_pos
     self[start_pos], self[end_pos] = NullPiece.instance, self[start_pos]
   end
 
