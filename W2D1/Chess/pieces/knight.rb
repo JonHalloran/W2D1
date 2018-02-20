@@ -15,6 +15,4 @@ class Knight < Piece
     "N"
   end
 
-  def moves; end
-
 end

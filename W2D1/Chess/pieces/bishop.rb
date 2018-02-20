@@ -5,6 +5,4 @@ class Bishop < Piece
     "B"
   end
 
-  def moves; end
-
 end

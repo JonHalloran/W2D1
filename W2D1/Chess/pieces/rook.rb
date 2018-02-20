@@ -5,6 +5,4 @@ class Rook < Piece
     "R"
   end
 
-  def moves; end
-
 end

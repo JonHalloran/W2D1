@@ -17,7 +17,4 @@ class King < Piece
     "K"
   end
 
-
-
-
 end

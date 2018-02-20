@@ -5,6 +5,4 @@ class Pawn < Piece
     "P"
   end
 
-  def moves; end
-
 end
