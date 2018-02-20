@@ -28,7 +28,7 @@ module Slideable
       col += dc
     end
     return result unless self.board.valid_pos?([row, col])
-    return result if self.board[[row, col]].color == self.color
+    return result unless enemy?(self.board[[row, col]])
     result << [row, col]
   end
 end

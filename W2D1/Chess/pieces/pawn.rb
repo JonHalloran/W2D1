@@ -39,7 +39,8 @@ class Pawn < Piece
   def attack
     [-1, 1].map do |c_diff|
       [self.pos[0] + self.direction, self.pos[1] + c_diff]
+    end.select do |pos|
+      self.board.valid_pos?(pos)
     end.select { |pos| enemy?(self.board[pos]) }
   end
-
 end
