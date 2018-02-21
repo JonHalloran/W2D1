@@ -1,5 +1,6 @@
 require_relative "board"
 require_relative "human_player"
+require_relative "computer_player"
 require_relative "display"
 require "byebug"
 
@@ -12,7 +13,7 @@ class ChessGame
     @board = Board.new
     @display = Display.new(self.board)
     @players = { white: HumanPlayer.new(:white, self.display),
-                 black: HumanPlayer.new(:black, self.display) }
+                 black: ComputerPlayer.new(:black) }
     @current_color = :white
   end
 
