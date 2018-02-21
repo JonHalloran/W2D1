@@ -68,12 +68,13 @@ class Cursor
   def select_position
     if self.selected_position.nil?
       unless board[self.cursor_pos].is_a?(NullPiece)
-        # TODO: check color
         self.selected_position = self.cursor_pos
+        nil
       end
     else
-      board.move_piece(self.selected_position, self.cursor_pos)
+      move = [self.selected_position, self.cursor_pos]
       self.selected_position = nil
+      move
     end
   end
 

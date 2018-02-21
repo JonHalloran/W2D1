@@ -17,7 +17,7 @@ class Board
     back_row = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
     back_row.map.with_index do |cls, i|
       self[[7, i]] = cls.new(:white, self, [7, i])
-      self[[0, 7 - i]] = cls.new(:black, self, [0, 7 - i])
+      self[[0, i]] = cls.new(:black, self, [0, i])
     end
 
     8.times do |i|
@@ -47,21 +47,22 @@ class Board
     return false unless in_check?(color)
     flattened = self.grid.flatten
     my_pieces = flattened.select { |piece| piece.color == color }
-    my_pieces.any? { |piece| !piece.valid_moves.empty? }
+    my_pieces.all? { |piece| piece.valid_moves.empty? }
   end
 
   def empty?(pos)
     self.valid_pos?(pos) && self[pos].is_a?(NullPiece)
   end
 
-  def valid_move?(start_pos, end_pos)
+  def valid_move?(start_pos, end_pos, color)
     return false if empty?(start_pos)
     piece = self[start_pos]
+    return false unless piece.color == color
     piece.valid_moves.include?(end_pos)
   end
 
-  def move_piece(start_pos, end_pos)
-    raise ArgumentError unless valid_move?(start_pos, end_pos)
+  def move_piece(start_pos, end_pos, color)
+    raise InvalidMoveError unless valid_move?(start_pos, end_pos, color)
     self.commit_move(start_pos, end_pos)
   end
 
@@ -101,5 +102,9 @@ class Board
     end.pos
   end
 
+
+end
+
+class InvalidMoveError < ArgumentError
 
 end

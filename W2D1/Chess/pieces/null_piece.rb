@@ -9,7 +9,7 @@ class NullPiece < Piece
     @color = :null
   end
 
-  def make_copy(other_board)
+  def make_copy(_)
     self
   end
 

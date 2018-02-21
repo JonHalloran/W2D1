@@ -23,12 +23,15 @@ class Display
 
   def disp_pos(pos)
     piece = board[pos]
-    background_color = pos.reduce(:+).odd? ? :light_black : :light_white
+    background_color = pos.reduce(:+).odd? ? :light_black : :default
     if pos == self.cursor.cursor_pos
       background_color = :green
+    elsif pos == self.cursor.selected_position
+      background_color = :light_blue
     end
-    print piece.to_s.colorize(:background => background_color)
+    print piece.to_s.colorize(background: background_color, color: piece.color)
   end
+
   def inspect
     to_s
   end
